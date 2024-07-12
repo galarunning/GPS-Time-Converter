@@ -1,0 +1,102 @@
+﻿<Window x:Class="GPSConverterWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TOW and GPS WEEK Converter" Height="700" Width="500"
+        Icon="C:\Users\mgala\Desktop\C#\Projects - Matteo\Start Projects\02 - Tools\GPS Time Calculator\GPS Time Calculator\Resources\Spirent.ico"
+        Background="LightGray"> 
+    <Grid>
+        <!--<Grid.Background>
+            <ImageBrush ImageSource="./Resources/download.jpg"/>
+        </Grid.Background>-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        
+        <!--Title-->
+        <TextBlock Text="TOW and GPS Week Converter" Grid.Row="1" Grid.Column="1"
+                   Grid.ColumnSpan="3" FontSize="30" FontFamily ="Aptos" Margin="5" TextAlignment="Center"/>
+        
+        <!--First Conversion-->
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2">
+            <TextBlock Text="Enter TOW value:" FontSize="11" FontFamily="Aptos" FontWeight="Bold"
+                       VerticalAlignment="Center"/>
+            <TextBox x:Name="TOWInput" Margin="5,0,0,0" FontFamily="Aptos" FontSize="11"
+                     Height="22" Width="150" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <Button x:Name="ConvertTOW" Content="Convert" FontWeight="Bold" Grid.Row="2" Grid.Column="3" Margin="0,5,0,5"
+                Background="LightBlue" HorizontalAlignment="Center" Width="57" Height="25" Click="ConvertTOW_Click"/>
+
+        <!--Second Conversion Week Day to TOW-->
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2">
+            <TextBlock Text="Week Time:" FontSize="11" FontFamily="Aptos" FontWeight="Bold" Width="62" VerticalAlignment="Center"/>
+            <ComboBox x:Name="WeekDayInput" AllowDrop="True" ItemsSource="{Binding WeekDays}" VerticalContentAlignment="Center" 
+                       Width="90" Height="25" HorizontalAlignment="Right" Margin="5,0,0,0"/>
+            <ComboBox x:Name="WeekHourInput" AllowDrop="True" ItemsSource="{Binding Hours}" VerticalContentAlignment="Center"
+                  Grid.Row="3" Grid.Column="2" Width="42" Height="25" Margin="5,0,0,0"/>
+            <ComboBox x:Name="MinuteInput" AllowDrop="True" ItemsSource="{Binding Minutes}" VerticalContentAlignment="Center"
+                  Grid.Row="3" Grid.Column="2" Width="42" Height="25" Grid.ColumnSpan="2" Margin="5,0,0,0"/>
+            <ComboBox x:Name="SecondInput" AllowDrop="True" ItemsSource="{Binding Seconds}" VerticalContentAlignment="Center"
+                  Grid.Row="3" Grid.Column="2" Width="42" Height="25" Grid.ColumnSpan="2" Margin="5,0,0,0"/>
+        </StackPanel>
+        <Button x:Name="ConvertWeek" Content="Convert" FontWeight="Bold" Grid.Row="3" Grid.Column="3" Margin="0,5,0,5"
+                Background="LightBlue" HorizontalAlignment="Center" Width="57" Height="25" Click="ConvertWeek_Click"/>
+
+
+        <!--Third Conversion UTC Time to GPS Week-->
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2">
+            <TextBlock Text="Enter UTC Date:" FontSize="11" FontFamily="Aptos" FontWeight="Bold" Width="82" VerticalAlignment="Center"/>
+            <ComboBox x:Name="UTCDayInput" AllowDrop="True" ItemsSource="{Binding DaysofMonths}" VerticalContentAlignment="Center"
+                       Width="42" Height="25" HorizontalAlignment="Right" Margin="5,0,0,0"/>
+            <ComboBox x:Name="UTCMonthInput" AllowDrop="True" ItemsSource="{Binding Months}" VerticalContentAlignment="Center"
+                  Grid.Row="3" Grid.Column="2" Width="90" Height="25" Margin="5,0,0,0"/>
+            <ComboBox x:Name="UTCYearInput" AllowDrop="True" ItemsSource="{Binding Years}" VerticalContentAlignment="Center"
+                  Grid.Row="3" Grid.Column="2" Width="65" Height="25" Grid.ColumnSpan="2" Margin="5,0,0,0"/>
+        </StackPanel>
+
+        <Button x:Name="ConvertUTC" Content="Convert" FontWeight="Bold" Grid.Row="4" Grid.Column="3" Margin="0,5,0,5"
+                Background="LightBlue" HorizontalAlignment="Center" Width="57" Height="25" Click="ConvertUTC_Click"/>
+
+        <!--Fourth Conversion GPS Week MNumber to UTC Time-->
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock Text="GPS week Number:" FontSize="11" FontFamily="Aptos" FontWeight="Bold" 
+                   Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="GPSWeekNumberInput" Grid.Column="2" Grid.Row="5" Margin="5,0,0,0" FontFamily="Aptos" FontSize="11"
+                     Height="22" Width="150" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <Button x:Name="ConvertGPSWeek" Content="Convert" FontWeight="Bold" Grid.Row="5" Grid.Column="3" Margin="0,5,0,5"
+                Background="LightBlue" HorizontalAlignment="Center" Width="57" Height="25" Click="ConvertGPSWeek_Click"/>
+        
+        <!--Leap Seconds Settings-->
+        <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <TextBlock Text="Leap Seconds:" Margin="5" VerticalAlignment="Center" FontSize="11" FontWeight="Bold" FontFamily="Aptos"/>
+            <ComboBox x:Name="LeapSecondSettings" Height="25" Width="42" Margin="5" SelectedIndex="17" VerticalContentAlignment="Center"
+                      FontSize="11" FontFamily="Aptos" ItemsSource="{Binding LeapSecondsList}"/>
+        </StackPanel>
+        <!--Last The Console of the Applications! -->
+        <TextBox x:Name="AppConsole" Margin="5" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="7"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPS Time Calculator", "GPS Time Calculator\GPS Time Calculator.csproj", "{5A6B3316-733F-45F1-A742-52D5C9DA4429}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A6B3316-733F-45F1-A742-52D5C9DA4429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6B3316-733F-45F1-A742-52D5C9DA4429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6B3316-733F-45F1-A742-52D5C9DA4429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6B3316-733F-45F1-A742-52D5C9DA4429}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C0A7AFA-4558-468E-ADAE-896E531805DC}
+	EndGlobalSection
+EndGlobal
