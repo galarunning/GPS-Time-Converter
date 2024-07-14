@@ -10,7 +10,6 @@ using System.DirectoryServices.ActiveDirectory;
 
 namespace GPSConverterWPF
 {
-
     public partial class MainWindow : Window
     {
         private readonly int MaxTOW = 604800;
@@ -42,7 +41,7 @@ namespace GPSConverterWPF
             DataContext = this;
         }
 
-        private (int weekDay, int hour, int minutes, int seconds) CalculateTime(int tow)
+        private (int weekDay, int hour, int minutes, int seconds, bool flag) CalculateTime(int tow)
         {
             if (tow >= 0 && tow <= 604800)
             {
@@ -57,21 +56,18 @@ namespace GPSConverterWPF
                 int minutes = (int)minutesDec;
                 int seconds = (int)Math.Round((minutesDec - minutes) * 60);
 
-                return (dayofWeek, hour, minutes, seconds);
+                return (dayofWeek, hour, minutes, seconds, true);
             }
-            else
+            else 
             {
-                return (0, 0, 0, 0);
+                return (0, 0, 0, 0, false);
             }
         }
 
         private int CalculateTOW(string IndexWeekDay ,int hour, int minutes, int seconds)
         {
-            int tow = 0;
-
             int day = Array.IndexOf(WeekDays, IndexWeekDay);
-
-            tow = ((day * 24) * 3600) + (hour * 3600) + (minutes * 60) + seconds + int.Parse(LeapSecondSettings.Text);
+            int tow = ((day * 24) * 3600) + (hour * 3600) + (minutes * 60) + seconds + int.Parse(LeapSecondSettings.Text);
 
             return tow;
 
@@ -81,16 +77,22 @@ namespace GPSConverterWPF
         {
             if (int.TryParse(TOWInput.Text, out int tow))
             {
-                var (weekDay, hour, minutes, seconds) = CalculateTime(tow);
-
-                DateTime utcDateTime = new DateTime(2024, 1, 1)
-                        .AddDays(weekDay - 1) 
-                        .AddHours(hour)
-                        .AddMinutes(minutes)
-                        .AddSeconds(seconds);
-                utcDateTime = utcDateTime.AddSeconds(-int.Parse(LeapSecondSettings.Text));
-                AppConsole.AppendText($"TOW: {TOWInput.Text} <--> {utcDateTime.DayOfWeek}" +
+                var (weekDay, hour, minutes, seconds, flag) = CalculateTime(tow);
+                if (flag) { 
+                    DateTime utcDateTime = new DateTime(2024, 1, 1)
+                            .AddDays(weekDay - 1) 
+                            .AddHours(hour)
+                            .AddMinutes(minutes)
+                            .AddSeconds(seconds);
+                    utcDateTime = utcDateTime.AddSeconds(-int.Parse(LeapSecondSettings.Text));
+                    AppConsole.AppendText($"TOW: {TOWInput.Text} <--> {utcDateTime.DayOfWeek}" +
                     $" {utcDateTime.Hour:D2}:{utcDateTime.Minute:D2}:{utcDateTime.Second:D2} UTC Time\n");
+                }
+                else if(flag == false)
+                {
+                    AppConsole.AppendText($"{TOWInput.Text} outside of boundary\n");
+                    AppConsole.AppendText("Allowable TOW --> 0 < TOW < 604800\n");
+                }
             }
             else
             {
